@@ -35,7 +35,7 @@ cpu_init_crit:
 	mcr	p15, 0, r0, c7, c7, 0	/* flush v3/v4 cache */
 	mcr	p15, 0, r0, c8, c7, 0	/* flush v4 TLB */
 
-	/* diable mmu stuff and caches */
+	/* disable mmu stuff and caches */
 	mrc	p15, 0, r0, c1, c0, 0
 	bic	r0, r0, #0x00002300	/* --V- --RS */
 	bic	r0, r0, #0x00000087	/* B--- -CAM */
@@ -63,6 +63,8 @@ cpu_init_crit:
 	bl	copy_from_nand
 
 after_copy:
+	b	led_test
+
 enable_mmu:
 	/* enable domain access */
 	ldr	r5, =0x0000ffff
@@ -99,6 +101,8 @@ clbss_l:
 	add	r0, r0, #4
 	cmp	r0, r1
 	ble	clbss_l
+
+	b	led_test
 
 	ldr	pc, _start_armboot
 
@@ -140,3 +144,12 @@ copy_failed:
 compare_failed:
 	nop
 	b	compare_failed
+
+led_test:
+	ldr r0, =0x7f008820
+	ldr r1, =0x111111
+	str r1, [r0]
+	ldr r0, =0x7f008824
+	ldr r2, =0x0
+	str r2, [r0]
+	b	.
