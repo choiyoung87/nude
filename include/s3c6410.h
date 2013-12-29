@@ -9,7 +9,7 @@
 #define __REGb(x)	(*(volatile unsigned char *)(x))
 #define __REG2(x,y)	(*(volatile unsigned long *)((x) + (y)))
 
-//#define CONFIG_ENABLE_MMU
+#define CONFIG_ENABLE_MMU
 #define TEXT_BASE	0xc7e00000
 
 #define set_pll(mdiv, pdiv, sdiv)	(1<<31 | mdiv<<16 | pdiv<<8 | sdiv)
