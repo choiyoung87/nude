@@ -2,10 +2,11 @@
 _TEXT_BASE:
 	.word	TEXT_BASE
 
-	.globl	lowlevel_init
-lowlevel_init:
+	.globl	board_init
+board_init:
 	mov	r12, lr
 
+	/* config gpio k,l,m ports */
 	ldr	r0, =ELFIN_GPIO_BASE
 	ldr	r1, =0x55555555
 	str	r1, [r0, #GPKCON0_OFFSET]
@@ -31,6 +32,7 @@ lowlevel_init:
 	ldr	r1, =0x002a
 	str	r1, [r0, #GPMDAT_OFFSET]
 
+	/* config memory interface */
 	ldr	r1, =0
 	str	r1, [r0, #MEM1DRVCON_OFFSET]
 

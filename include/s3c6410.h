@@ -1,12 +1,15 @@
 #ifndef __S3C6410_H
 #define __S3C6410_H
 
-#ifndef __ASSEMBLY__
-#define __REG(x)	(*(volatile unsigned long *)(x))
-#else
-#define __REG(x)	(x)
-#endif
+#define UData(Data)	((unsigned long) (Data))
 
+#define __REG(x)	(*(volatile unsigned long *)(x))
+#define __REGl(x)	(*(volatile unsigned long *)(x))
+#define __REGw(x)	(*(volatile unsigned short *)(x))
+#define __REGb(x)	(*(volatile unsigned char *)(x))
+#define __REG2(x,y)	(*(volatile unsigned long *)((x) + (y)))
+
+//#define CONFIG_ENABLE_MMU
 #define TEXT_BASE	0xc7e00000
 
 #define set_pll(mdiv, pdiv, sdiv)	(1<<31 | mdiv<<16 | pdiv<<8 | sdiv)
